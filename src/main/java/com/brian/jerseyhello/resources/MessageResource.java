@@ -5,7 +5,11 @@ import com.brian.jerseyhello.services.MessageService;
 import com.brian.jerseyhello.model.Message;
 
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
+import java.net.URI;
 import java.util.List;
 
 @Path("/messages")
@@ -32,8 +36,11 @@ public class MessageResource {
     }
 
     @POST
-    public Message createMessage(Message message) {
-        return messageService.createMessage(message);
+    public Response createMessage(Message message, @Context UriInfo uriInfo) {
+        Message newMessage = messageService.createMessage(message);
+        String newId = String.valueOf(newMessage.getId());
+        URI newUri = uriInfo.getBaseUriBuilder().path(newId).build();
+        return Response.created(newUri).entity(newMessage).build();
     }
 
     @PUT

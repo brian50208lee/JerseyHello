@@ -1,10 +1,15 @@
 package com.brian.jerseyhello.resources;
 
+import com.brian.jerseyhello.model.Message;
 import com.brian.jerseyhello.model.Profile;
 import com.brian.jerseyhello.services.ProfileService;
 
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
+import java.net.URI;
 import java.util.List;
 
 @Path("/profiles")
@@ -25,8 +30,11 @@ public class ProfileResource {
     }
 
     @POST
-    public Profile createProfile(Profile profile) {
-        return profileService.createProfile(profile);
+    public Response createProfile(Profile profile, @Context UriInfo uriInfo) {
+        Profile newProfile = profileService.createProfile(profile);
+        String newName = String.valueOf(newProfile.getName());
+        URI newUri = uriInfo.getBaseUriBuilder().path(newName).build();
+        return Response.created(newUri).entity(newProfile).build();
     }
 
     @PUT
