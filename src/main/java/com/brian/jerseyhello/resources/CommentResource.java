@@ -34,7 +34,7 @@ public class CommentResource {
     public Response createMessage(@PathParam("messageId") long messageId, Comment comment, @Context UriInfo uriInfo) {
         Comment newComment = commentService.createComment(messageId, comment);
         String newId = String.valueOf(newComment.getId());
-        URI newUri = uriInfo.getBaseUriBuilder().path(newId).build();
+        URI newUri = uriInfo.getAbsolutePathBuilder().path(newId).build();
         return Response.created(newUri).entity(newComment).build();
     }
 

@@ -33,7 +33,7 @@ public class ProfileResource {
     public Response createProfile(Profile profile, @Context UriInfo uriInfo) {
         Profile newProfile = profileService.createProfile(profile);
         String newName = String.valueOf(newProfile.getName());
-        URI newUri = uriInfo.getBaseUriBuilder().path(newName).build();
+        URI newUri = uriInfo.getAbsolutePathBuilder().path(newName).build();
         return Response.created(newUri).entity(newProfile).build();
     }
 

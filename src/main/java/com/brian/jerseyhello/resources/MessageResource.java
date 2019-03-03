@@ -39,7 +39,7 @@ public class MessageResource {
     public Response createMessage(Message message, @Context UriInfo uriInfo) {
         Message newMessage = messageService.createMessage(message);
         String newId = String.valueOf(newMessage.getId());
-        URI newUri = uriInfo.getBaseUriBuilder().path(newId).build();
+        URI newUri = uriInfo.getAbsolutePathBuilder().path(newId).build();
         return Response.created(newUri).entity(newMessage).build();
     }
 
