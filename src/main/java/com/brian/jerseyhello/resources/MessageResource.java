@@ -1,5 +1,6 @@
 package com.brian.jerseyhello.resources;
 
+import com.brian.jerseyhello.resources.bean.MessageFilterBean;
 import com.brian.jerseyhello.services.MessageService;
 import com.brian.jerseyhello.model.Message;
 
@@ -14,14 +15,12 @@ public class MessageResource {
     MessageService messageService = new MessageService();
 
     @GET
-    public List<Message> getMessages(@QueryParam("year") int year,
-                                     @QueryParam("start") int start,
-                                     @QueryParam("size") int size) {
-        if (year > 0) {
-            return messageService.getMessageFilteredYear(year);
+    public List<Message> getMessages(@BeanParam MessageFilterBean filterBean) {
+        if (filterBean.getYear() > 0) {
+            return messageService.getMessageFilteredYear(filterBean.getYear());
         }
-        if (start >=0 && size > 0) {
-            return messageService.getMessagePaginated(start, size);
+        if (filterBean.getStart() >=0 && filterBean.getSize() > 0) {
+            return messageService.getMessagePaginated(filterBean.getStart(), filterBean.getSize());
         }
         return messageService.getAllMessages();
     }
