@@ -52,8 +52,8 @@ public class MessageResource {
 
     @DELETE
     @Path("/{messageId}")
-    public void removeMessage(@PathParam("messageId") long messageId) {
-        messageService.removeMessage(messageId);
+    public Message removeMessage(@PathParam("messageId") long messageId) {
+        return messageService.removeMessage(messageId);
     }
 
     @Path("/{messageId}/comments")

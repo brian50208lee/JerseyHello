@@ -46,7 +46,7 @@ public class ProfileResource {
 
     @DELETE
     @Path("/{profileName}")
-    public void removeProfile(@PathParam("profileName") String profileName) {
-        profileService.removeProfile(profileName);
+    public Profile removeProfile(@PathParam("profileName") String profileName) {
+        return profileService.removeProfile(profileName);
     }
 }

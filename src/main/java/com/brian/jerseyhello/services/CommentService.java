@@ -1,5 +1,6 @@
 package com.brian.jerseyhello.services;
 
+import com.brian.jerseyhello.Exception.ResourceNotFoundException;
 import com.brian.jerseyhello.database.DummyDatabase;
 import com.brian.jerseyhello.model.Comment;
 import com.brian.jerseyhello.model.Message;
@@ -13,26 +14,20 @@ public class CommentService {
     }
 
     public List<Comment> getAllComments(long messageId) {
-        if (!isMessageExist(messageId)) {
-            return null;
-        }
+        checkMessageExistOrThrowException(messageId);
         Message message = messages.get(messageId);
         return new ArrayList<>(message.getComments().values());
     }
 
 
     public Comment getComment(long messageId, long commentId) {
-        if (!isMessageExist(messageId)) {
-            return null;
-        }
+        checkCommentExistOrThrowException(messageId, commentId);
         Message message = messages.get(messageId);
         return message.getComments().get(commentId);
     }
 
     public Comment createComment(long messageId, Comment comment) {
-        if (!isMessageExist(messageId)) {
-            return null;
-        }
+        checkMessageExistOrThrowException(messageId);
         Message message = messages.get(messageId);
         comment.setId(message.getComments().size() + 1);
         comment.setCreated(new Date());
@@ -42,24 +37,39 @@ public class CommentService {
 
 
     public Comment updateComment(long messageId, Comment comment) {
-        if (!isMessageExist(messageId)) {
-            return null;
-        }
+        checkMessageExistOrThrowException(messageId);
         Message message = messages.get(messageId);
         comment.setCreated(new Date());
         message.getComments().put(comment.getId(), comment);
         return comment;
     }
 
-    public void removeComment(long messageId, long commentId) {
-        if (!isMessageExist(messageId) || commentId <= 0) {
-            return;
-        }
+    public Comment removeComment(long messageId, long commentId) {
+        checkCommentExistOrThrowException(messageId, commentId);
         Message message = messages.get(messageId);
+        Comment comment = message.getComments().get(commentId);
         message.getComments().put(commentId, null);
+        return comment;
     }
 
-    private boolean isMessageExist(long messageId) {
-        return messages.get(messageId) != null;
+    private void checkMessageExistOrThrowException(long messageId) {
+        if (!messages.containsKey(messageId)) {
+            throwMessageNotFoundException(messageId);
+        }
+    }
+
+    private void checkCommentExistOrThrowException(long messageId, long commentId) {
+        checkMessageExistOrThrowException(messageId);
+        if (!messages.get(messageId).getComments().containsKey(commentId)) {
+            throwCommentNotFoundException(commentId);
+        }
+    }
+
+    private void throwMessageNotFoundException(long messageId) {
+        throw new ResourceNotFoundException(String.format("Message not found, message = %d", messageId));
+    }
+
+    private void throwCommentNotFoundException(long commentId) {
+        throw new ResourceNotFoundException(String.format("Comment not found, commentId = %d", commentId));
     }
 }

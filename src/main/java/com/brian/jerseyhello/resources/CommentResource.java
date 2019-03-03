@@ -47,8 +47,8 @@ public class CommentResource {
 
     @DELETE
     @Path("/{commentId}")
-    public void removeMessage(@PathParam("messageId") long messageId, @PathParam("commentId") long commentId) {
-        commentService.removeComment(messageId, commentId);
+    public Comment removeMessage(@PathParam("messageId") long messageId, @PathParam("commentId") long commentId) {
+        return commentService.removeComment(messageId, commentId);
     }
 }
 

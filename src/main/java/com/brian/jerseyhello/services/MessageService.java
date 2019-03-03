@@ -1,5 +1,7 @@
 package com.brian.jerseyhello.services;
 
+import com.brian.jerseyhello.Exception.IllegalResourceException;
+import com.brian.jerseyhello.Exception.ResourceNotFoundException;
 import com.brian.jerseyhello.database.DummyDatabase;
 import com.brian.jerseyhello.model.Message;
 
@@ -43,19 +45,34 @@ public class MessageService {
     }
 
     public Message getMessage(long id) {
+        checkMessageExistOrThrowException(id);
         return messages.get(id);
     }
 
     public Message updateMessage(Message message) {
         if (message.getId() <= 0) {
-            return null;
+            throw new IllegalResourceException(String.format("Illegal message id = %d", message.getId()));
         }
         message.setCreated(new Date());
         messages.put(message.getId(), message);
         return message;
     }
 
-    public void removeMessage(long id) {
+    public Message removeMessage(long id) {
+        checkMessageExistOrThrowException(id);
+        Message message = messages.get(id);
         messages.put(id, null);
+        return message;
     }
+
+    private void checkMessageExistOrThrowException(long id) {
+        if (!messages.containsKey(id)) {
+            throwMessageNotFoundException(id);
+        }
+    }
+
+    private void throwMessageNotFoundException(long id) {
+        throw new ResourceNotFoundException(String.format("Message not found, id = %d", id));
+    }
+
 }
