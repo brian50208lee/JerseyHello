@@ -2,7 +2,10 @@ package com.brian.jerseyhello.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import javax.xml.bind.annotation.XmlTransient;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Java Bean
@@ -12,6 +15,7 @@ public class Message {
     private String author;
     private String content;
     private Date created;
+    private Map<Long, Comment> comments;
 
     public Message() {
     }
@@ -21,6 +25,7 @@ public class Message {
         this.author = author;
         this.content = content;
         this.created = new Date();
+        this.comments = new HashMap<>();
     }
 
     public long getId() {
@@ -53,5 +58,14 @@ public class Message {
 
     public void setCreated(Date created) {
         this.created = created;
+    }
+
+    @XmlTransient
+    public Map<Long, Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(Map<Long, Comment> comments) {
+        this.comments = comments;
     }
 }
