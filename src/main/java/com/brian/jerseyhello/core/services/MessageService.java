@@ -1,6 +1,6 @@
 package com.brian.jerseyhello.core.services;
 
-import com.brian.jerseyhello.core.database.DataBase;
+import com.brian.jerseyhello.core.database.Database;
 import com.brian.jerseyhello.core.exception.IllegalDataException;
 import com.brian.jerseyhello.core.exception.DataNotFoundException;
 import com.brian.jerseyhello.core.data.Message;
@@ -8,10 +8,10 @@ import com.brian.jerseyhello.core.data.Message;
 import java.util.*;
 
 public class MessageService {
-    private DataBase db;
+    private Database db;
     private Map<Long, Message> messages;
 
-    public MessageService(DataBase db) {
+    public MessageService(Database db) {
         this.db = db;
         this.messages = db.getMessages();
     }

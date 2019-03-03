@@ -2,12 +2,12 @@ package com.brian.jerseyhello.database;
 
 import com.brian.jerseyhello.core.data.Message;
 import com.brian.jerseyhello.core.data.Profile;
-import com.brian.jerseyhello.core.database.DataBase;
+import com.brian.jerseyhello.core.database.Database;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class DummyDatabase implements DataBase {
+public class DummyDatabase implements Database {
     private static DummyDatabase instance = null;
 
     public static synchronized DummyDatabase getInstance() {

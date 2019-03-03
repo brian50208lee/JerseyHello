@@ -5,7 +5,7 @@ import com.brian.jerseyhello.core.data.Profile;
 
 import java.util.Map;
 
-public interface DataBase {
+public interface Database {
     public Map<Long, Message> getMessages();
     public Map<String, Profile> getProfiles();
 }

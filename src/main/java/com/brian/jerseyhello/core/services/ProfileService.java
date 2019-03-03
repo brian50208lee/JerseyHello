@@ -1,6 +1,6 @@
 package com.brian.jerseyhello.core.services;
 
-import com.brian.jerseyhello.core.database.DataBase;
+import com.brian.jerseyhello.core.database.Database;
 import com.brian.jerseyhello.core.exception.IllegalDataException;
 import com.brian.jerseyhello.core.exception.DataAlreadyExistException;
 import com.brian.jerseyhello.core.exception.DataNotFoundException;
@@ -12,10 +12,10 @@ import java.util.List;
 import java.util.Map;
 
 public class ProfileService {
-    private DataBase db;
+    private Database db;
     private Map<String, Profile> profiles;
 
-    public ProfileService(DataBase db) {
+    public ProfileService(Database db) {
         this.profiles  = db.getProfiles();
     }
 
