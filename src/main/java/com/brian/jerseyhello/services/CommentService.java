@@ -66,7 +66,7 @@ public class CommentService {
     }
 
     private void throwMessageNotFoundException(long messageId) {
-        throw new ResourceNotFoundException(String.format("Message not found, message = %d", messageId));
+        throw new ResourceNotFoundException(String.format("Message not found, messageId = %d", messageId));
     }
 
     private void throwCommentNotFoundException(long commentId) {
