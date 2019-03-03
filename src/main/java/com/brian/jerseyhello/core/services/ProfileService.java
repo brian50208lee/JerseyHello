@@ -1,10 +1,10 @@
-package com.brian.jerseyhello.services;
+package com.brian.jerseyhello.core.services;
 
-import com.brian.jerseyhello.Exception.IllegalResourceException;
-import com.brian.jerseyhello.Exception.ResourceAlreadyExistException;
-import com.brian.jerseyhello.Exception.ResourceNotFoundException;
-import com.brian.jerseyhello.database.DummyDatabase;
-import com.brian.jerseyhello.model.Profile;
+import com.brian.jerseyhello.core.database.DataBase;
+import com.brian.jerseyhello.core.exception.IllegalDataException;
+import com.brian.jerseyhello.core.exception.DataAlreadyExistException;
+import com.brian.jerseyhello.core.exception.DataNotFoundException;
+import com.brian.jerseyhello.core.data.Profile;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -12,9 +12,11 @@ import java.util.List;
 import java.util.Map;
 
 public class ProfileService {
-    private Map<String, Profile> profiles = DummyDatabase.getInstance().getProfiles();
+    private DataBase db;
+    private Map<String, Profile> profiles;
 
-    public ProfileService() {
+    public ProfileService(DataBase db) {
+        this.profiles  = db.getProfiles();
     }
 
     public List<Profile> getAllProfiles() {
@@ -23,10 +25,10 @@ public class ProfileService {
 
     public Profile createProfile(Profile profile) {
         if (profile.getName().isEmpty()) {
-            throw new IllegalResourceException("Illegal profile name. empty string");
+            throw new IllegalDataException("Illegal profile name. empty string");
         }
         if (profiles.containsKey(profile.getName())) {
-            throw new ResourceAlreadyExistException("Profile name already exist");
+            throw new DataAlreadyExistException("Profile name already exist");
         }
         profile.setId(profiles.size() + 1);
         profile.setCreated(new Date());
@@ -41,7 +43,7 @@ public class ProfileService {
 
     public Profile updateProfile(Profile profile) {
         if (profile.getName().isEmpty()) {
-            throw new IllegalResourceException("Illegal profile name. empty string");
+            throw new IllegalDataException("Illegal profile name. empty string");
         }
         profile.setCreated(new Date());
         profiles.put(profile.getName(), profile);
@@ -63,7 +65,7 @@ public class ProfileService {
     }
 
     private void throwProfileNotFoundException(String name) {
-        throw new ResourceNotFoundException(String.format("Profile not found, name = %s", name));
+        throw new DataNotFoundException(String.format("Profile not found, name = %s", name));
     }
 
 }

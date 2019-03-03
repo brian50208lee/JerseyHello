@@ -1,7 +1,5 @@
-package com.brian.jerseyhello.Exception;
+package com.brian.jerseyhello.jersey.Exception;
 
-
-import com.brian.jerseyhello.model.ErrorMessage;
 
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;

@@ -1,16 +1,19 @@
-package com.brian.jerseyhello.services;
+package com.brian.jerseyhello.core.services;
 
-import com.brian.jerseyhello.Exception.ResourceNotFoundException;
-import com.brian.jerseyhello.database.DummyDatabase;
-import com.brian.jerseyhello.model.Comment;
-import com.brian.jerseyhello.model.Message;
+import com.brian.jerseyhello.core.database.DataBase;
+import com.brian.jerseyhello.core.exception.DataNotFoundException;
+import com.brian.jerseyhello.core.data.Comment;
+import com.brian.jerseyhello.core.data.Message;
 
 import java.util.*;
 
 public class CommentService {
-    private Map<Long, Message> messages = DummyDatabase.getInstance().getMessages();
+    private DataBase db;
+    private Map<Long, Message> messages;
 
-    public CommentService() {
+    public CommentService(DataBase db) {
+        this.db = db;
+        this.messages = db.getMessages();
     }
 
     public List<Comment> getAllComments(long messageId) {
@@ -66,10 +69,10 @@ public class CommentService {
     }
 
     private void throwMessageNotFoundException(long messageId) {
-        throw new ResourceNotFoundException(String.format("Message not found, messageId = %d", messageId));
+        throw new DataNotFoundException(String.format("Message not found, messageId = %d", messageId));
     }
 
     private void throwCommentNotFoundException(long commentId) {
-        throw new ResourceNotFoundException(String.format("Comment not found, commentId = %d", commentId));
+        throw new DataNotFoundException(String.format("Comment not found, commentId = %d", commentId));
     }
 }

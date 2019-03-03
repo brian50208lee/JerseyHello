@@ -1,4 +1,4 @@
-package com.brian.jerseyhello.model;
+package com.brian.jerseyhello.jersey.Exception;
 
 public class ErrorMessage {
     private String errorMessage;

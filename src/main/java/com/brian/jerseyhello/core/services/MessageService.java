@@ -1,16 +1,19 @@
-package com.brian.jerseyhello.services;
+package com.brian.jerseyhello.core.services;
 
-import com.brian.jerseyhello.Exception.IllegalResourceException;
-import com.brian.jerseyhello.Exception.ResourceNotFoundException;
-import com.brian.jerseyhello.database.DummyDatabase;
-import com.brian.jerseyhello.model.Message;
+import com.brian.jerseyhello.core.database.DataBase;
+import com.brian.jerseyhello.core.exception.IllegalDataException;
+import com.brian.jerseyhello.core.exception.DataNotFoundException;
+import com.brian.jerseyhello.core.data.Message;
 
 import java.util.*;
 
 public class MessageService {
-    private Map<Long, Message> messages = DummyDatabase.getInstance().getMessages();
+    private DataBase db;
+    private Map<Long, Message> messages;
 
-    public MessageService() {
+    public MessageService(DataBase db) {
+        this.db = db;
+        this.messages = db.getMessages();
     }
 
     public List<Message> getAllMessages() {
@@ -51,7 +54,7 @@ public class MessageService {
 
     public Message updateMessage(Message message) {
         if (message.getId() <= 0) {
-            throw new IllegalResourceException(String.format("Illegal message id = %d", message.getId()));
+            throw new IllegalDataException(String.format("Illegal message id = %d", message.getId()));
         }
         message.setCreated(new Date());
         messages.put(message.getId(), message);
@@ -72,7 +75,7 @@ public class MessageService {
     }
 
     private void throwMessageNotFoundException(long id) {
-        throw new ResourceNotFoundException(String.format("Message not found, id = %d", id));
+        throw new DataNotFoundException(String.format("Message not found, id = %d", id));
     }
 
 }

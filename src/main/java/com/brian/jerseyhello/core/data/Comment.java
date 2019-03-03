@@ -1,4 +1,4 @@
-package com.brian.jerseyhello.model;
+package com.brian.jerseyhello.core.data;
 
 import java.util.Date;
 

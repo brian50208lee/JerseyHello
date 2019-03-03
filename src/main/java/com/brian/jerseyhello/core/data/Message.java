@@ -1,6 +1,4 @@
-package com.brian.jerseyhello.model;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
+package com.brian.jerseyhello.core.data;
 
 import javax.xml.bind.annotation.XmlTransient;
 import java.util.Date;

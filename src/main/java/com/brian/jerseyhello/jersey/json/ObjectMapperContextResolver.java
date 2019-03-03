@@ -1,4 +1,4 @@
-package com.brian.jerseyhello.json;
+package com.brian.jerseyhello.jersey.json;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;

@@ -1,4 +1,4 @@
-package com.brian.jerseyhello.resources;
+package com.brian.jerseyhello.jersey;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;

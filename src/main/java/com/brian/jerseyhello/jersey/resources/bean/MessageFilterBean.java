@@ -1,4 +1,4 @@
-package com.brian.jerseyhello.resources.bean;
+package com.brian.jerseyhello.jersey.resources.bean;
 
 import javax.ws.rs.QueryParam;
 

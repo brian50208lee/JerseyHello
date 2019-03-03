@@ -1,8 +1,8 @@
-package com.brian.jerseyhello.resources;
+package com.brian.jerseyhello.jersey.resources;
 
-import com.brian.jerseyhello.model.Message;
-import com.brian.jerseyhello.model.Profile;
-import com.brian.jerseyhello.services.ProfileService;
+import com.brian.jerseyhello.core.data.Profile;
+import com.brian.jerseyhello.core.services.ProfileService;
+import com.brian.jerseyhello.database.DummyDatabase;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
@@ -16,7 +16,7 @@ import java.util.List;
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class ProfileResource {
-    ProfileService profileService = new ProfileService();
+    ProfileService profileService = new ProfileService(DummyDatabase.getInstance());
 
     @GET
     public List<Profile> getProfiles() {
