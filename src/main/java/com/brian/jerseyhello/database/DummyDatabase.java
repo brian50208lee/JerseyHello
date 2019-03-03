@@ -16,17 +16,22 @@ public class DummyDatabase {
         return instance;
     }
 
-    private Map<Long, Profile> profiles = new HashMap<>();
     private Map<Long, Message> messages = new HashMap<>();
+    private Map<String, Profile> profiles = new HashMap<>();
 
     private DummyDatabase() {
-    }
-
-    public Map<Long, Profile> getProfiles() {
-        return profiles;
+        messages.put(1L, new Message(1L, "Brian", "Hi"));
+        messages.put(2L, new Message(2L, "Tony", "Hello"));
+        profiles.put("Brian", new Profile(1L, "Brian"));
+        profiles.put("Tony", new Profile(2L, "Tony"));
     }
 
     public Map<Long, Message> getMessages() {
         return messages;
+    }
+
+
+    public Map<String, Profile> getProfiles() {
+        return profiles;
     }
 }

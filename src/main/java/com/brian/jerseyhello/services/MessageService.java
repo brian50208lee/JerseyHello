@@ -12,8 +12,6 @@ public class MessageService {
     private Map<Long, Message> messages = DummyDatabase.getInstance().getMessages();
 
     public MessageService() {
-        messages.put(1L, new Message(1L, "Brian", "Hi"));
-        messages.put(2L, new Message(2L, "Tony", "Hello"));
     }
 
     public List<Message> getAllMessages() {
@@ -35,13 +33,12 @@ public class MessageService {
         if (message.getId() <= 0) {
             return null;
         }
+        message.setCreated(new Date());
         messages.put(message.getId(), message);
         return message;
     }
 
-    public Message removeMessage(Message message) {
-        return messages.remove(message);
+    public void removeMessage(long id) {
+        messages.put(id, null);
     }
-
-
 }
